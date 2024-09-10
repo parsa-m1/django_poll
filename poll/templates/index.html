@@ -1,9 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <ul>
-    {% for question in questions %}
-        <li>{{ question.q_text }}</li>
-    {% endfor %}
-    </ul>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for question in questions %}
+                <div class="col">
+                  <div class="card" style="margin: 10px">
+                  <div class="card-body">
+                    <h6 class="card-title">{{ question.q_text }}</h6>
+                    <p class="card-text"><small class="text-body-secondary">category: {{ question.category }}</small></p>
+
+                  </div>
+                  <div class="card-footer">
+                    <small class="text-body-secondary col">uploaded {{ question.pub_date|timesince }} ago</small>
+                    <a href="{{ question.get_absolute_url }}" class="btn btn-secondary" style="float: right; width: 100px">view</a>
+                  </div>
+
+                </div>
+              </div>
+            {% endfor %}
+    </div>
 {% endblock %}

@@ -7,12 +7,12 @@ def index(request):
 
     return render(request, 'index.html', {'questions': questions})
 
-def poll_detail(request, slug):
-    question = get_object_or_404(Question, slug=slug)
+def poll_detail(request, id):
+    question = get_object_or_404(Question, id=id)
 
     return render(request, 'poll_detail.html', {'question': question})
 
-def poll_results(request, slug):
+def poll_results(request, q_id):
     pass
 
 

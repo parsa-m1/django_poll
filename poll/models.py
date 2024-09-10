@@ -17,15 +17,18 @@ class Question(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
 
+
     class Meta:
         ordering = ['-pub_date']
 
     def __str__(self):
         return self.q_text[:50]
 
+    def get_absolute_url(self):
+        return reverse('poll_detail', kwargs={'id': self.id})
 
 class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     c_text = models.CharField(max_length=100)
     vote = models.IntegerField(default=0)
 
