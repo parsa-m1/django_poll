@@ -20,9 +20,18 @@
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-        <li><a href="#" class="nav-link px-2">Features</a></li>
-        <li><a href="#" class="nav-link px-2">Pricing</a></li>
-        <li><a href="#" class="nav-link px-2">FAQs</a></li>
+        <li><div class="dropdown">
+              <a class="btn btn-link dropdown-toggle text-decoration-none"  href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Category
+              </a>
+            
+              <ul class="dropdown-menu">
+                  {% for category in categories %}
+                    <li><a class="dropdown-item" href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+        </li>
         <li><a href="#" class="nav-link px-2">About</a></li>
       </ul>
 

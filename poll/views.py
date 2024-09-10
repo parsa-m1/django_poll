@@ -11,5 +11,13 @@ def poll_detail(request, slug):
     question = get_object_or_404(Question, slug=slug)
 
     return render(request, 'poll_detail.html', {'question': question})
+
 def poll_results(request, slug):
     pass
+
+
+def poll_category(request, slug):
+    category = get_object_or_404(Category, slug=slug)
+    questions = Question.objects.filter(category=category)
+
+    return render(request, 'index.html', {'questions': questions})

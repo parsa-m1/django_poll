@@ -1,10 +1,16 @@
 from django.db import models
+from django.urls import reverse
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('poll_category', kwargs={'slug': self.slug})
+
 
 class Question(models.Model):
     q_text = models.CharField(max_length=200)
@@ -16,6 +22,7 @@ class Question(models.Model):
 
     def __str__(self):
         return self.q_text[:50]
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

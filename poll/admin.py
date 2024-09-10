@@ -6,6 +6,7 @@ from .models import *
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+    prepopulated_fields = {'slug': ('name',)}
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
