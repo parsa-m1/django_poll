@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -16,7 +17,7 @@ class Question(models.Model):
     q_text = models.CharField(max_length=200)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published', auto_now_add=True)
-
+    participants = models.ManyToManyField(User, blank=True)
 
     class Meta:
         ordering = ['-pub_date']
@@ -26,6 +27,11 @@ class Question(models.Model):
 
     def get_absolute_url(self):
         return reverse('poll_detail', kwargs={'id': self.id})
+
+    def is_voted(self, user):
+        if user in self.participants.all():
+            return True
+        return False
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
