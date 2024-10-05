@@ -14,8 +14,9 @@ class Category(models.Model):
 
 
 class Question(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='questions')
     q_text = models.CharField(max_length=200)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='questions')
     pub_date = models.DateTimeField('date published', auto_now_add=True)
     participants = models.ManyToManyField(User, blank=True)
 

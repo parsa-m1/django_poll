@@ -13,6 +13,14 @@
                   <div class="card-footer">
                     <small class="text-body-secondary col">uploaded {{ question.pub_date|timesince }} ago</small>
                     <a href="{{ question.get_absolute_url }}" class="btn btn-secondary" style="float: right; width: 100px">view</a>
+                    {% if question.author == request.user %}
+                     <a href="{% url 'update_poll' question.id %}" class="btn btn-outline-secondary" style="
+                     float: right; width: 70px; margin-right: 10px"
+                     >edit</a>
+                     <a href="{% url 'delete_poll' question.id %}" class="btn btn-outline-secondary" style="
+                     float: right; width: 70px; margin-right: 10px"
+                     >delete</a>
+                    {% endif %}
                   </div>
 
                 </div>

@@ -3,8 +3,15 @@
 {% block content %}
 
     {% if is_voted %}
-    you have already participated in this poll
+    <div class="d-flex justify-content-center">
+            <h5>You participated in this poll before</h5>
+    </div><br><br>
 
+        <div class="d-flex justify-content-center">
+
+        <p style="display: inline; margin-right: 20px">for seeing results of the poll click the button</p>
+        <a href="{% url 'poll_results' question.id %}" class="btn btn btn-secondary">see results</a>
+        </div>
     {% else %}
     <div class="d-flex justify-content-center">
         <h5>{{ question.q_text }}</h5>
