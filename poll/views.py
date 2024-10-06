@@ -2,14 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.text import slugify
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.forms import inlineformset_factory
+from django.core.paginator import Paginator
 
 from .models import *
 from .forms import *
+
 def index(request):
-    questions = Question.objects.all()
+
+    p = Paginator(Question.objects.all(), 8)
+    page = request.GET.get('page')
+    questions = p.get_page(page)
 
     return render(request, 'index.html', {'questions': questions})
+
 
 def poll_detail(request, id):
     question = get_object_or_404(Question, id=id)
@@ -28,8 +35,12 @@ def poll_detail(request, id):
 
 def poll_results(request, q_id):
     question = get_object_or_404(Question, id=q_id)
+    choices = question.choices.all()
 
-    return render(request, 'poll_result.html', {'question': question})
+    return render(request, 'poll_result.html', {
+        'question': question,
+        'choices': choices,
+    })
 
 
 def poll_category(request, slug):
@@ -71,7 +82,7 @@ def logout_page(request):
 
 
 
-
+@login_required(login_url='login')
 def create_poll(request):
     question_form = QuestionForm()
     choice_formset = ChoiceFormSet()
@@ -93,6 +104,8 @@ def create_poll(request):
         'choice_formset': choice_formset,
     })
 
+
+@login_required(login_url='login')
 def update_poll(request, id):
     question = get_object_or_404(Question, id=id)
     question_form = QuestionForm(instance=question)
@@ -119,4 +132,14 @@ def update_poll(request, id):
 def delete_poll(request, id):
     question = get_object_or_404(Question, pk=id)
     question.delete()
+
     return redirect('index')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+
+
+

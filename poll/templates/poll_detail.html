@@ -4,17 +4,17 @@
 
     {% if is_voted %}
     <div class="d-flex justify-content-center">
-            <h5>You participated in this poll before</h5>
+            <h3>You participated in this poll before</h3>
     </div><br><br>
 
         <div class="d-flex justify-content-center">
 
-        <p style="display: inline; margin-right: 20px">for seeing results of the poll click the button</p>
+        <p style="display: inline; margin-right: 20px ">Click here to see the poll results</p>
         <a href="{% url 'poll_results' question.id %}" class="btn btn btn-secondary">see results</a>
         </div>
     {% else %}
     <div class="d-flex justify-content-center">
-        <h5>{{ question.q_text }}</h5>
+        <h3>{{ question.q_text }}</h3>
     </div>
     <br><br>
     <form action="" method="post">{% csrf_token %}
@@ -27,10 +27,13 @@
                 </div>
             {% endfor %}
             </div>
-
+            {% if request.user.is_authenticated %}
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-outline-secondary" style="margin-top: 20px;">submit</button>
+            {% else %}
+                <p class="mt-5 mb-3 text-body-secondary">you have to login first to be able to vote</p>
             </div>
+            {% endif %}
         </div>
     </form>
     {% endif %}

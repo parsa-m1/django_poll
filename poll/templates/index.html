@@ -25,6 +25,44 @@
 
                 </div>
               </div>
+
+
             {% endfor %}
-    </div>
+        </div>
+        <div style="margin-top: 30px; margin-left: 20px" class="mt-5 mb-3">
+
+            {% if questions.has_previous %}
+                <a href="?page=1" style="text-decoration: none" >
+                <button class="btn btn-outline-secondary">
+                    &laquo;
+                </button>
+                </a>
+
+                <a href="?page={{ questions.previous_page_num }}" style="text-decoration: none" >
+                <button class="btn btn-outline-secondary">
+                    Previous
+                </button>
+                </a>
+
+            {% endif %}
+
+                <span class="text-body-secondary">
+                    page {{ questions.number }} of {{ questions.paginator.num_pages }}
+                </span>
+
+            {% if questions.has_next %}
+                <a href="?page={{ questions.next_page_number }}" style="text-decoration: none" >
+                <button class="btn btn-outline-secondary">
+                    next
+                </button>
+                </a>
+
+                <a href="?page={{ questions.paginator.num_pages }}" >
+                <button class="btn btn-outline-secondary">
+                    &raquo;
+                </button>
+                </a>
+            {% endif %}
+
+            </div>
 {% endblock %}
